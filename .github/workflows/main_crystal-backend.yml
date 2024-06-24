@@ -23,6 +23,8 @@ jobs:
       with:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
+        registry: ${{secrets.REGISTRY}}
+
         # - name: Build docker_compose
         #   run: docker-compose up -d --build
         # - name: Build application
