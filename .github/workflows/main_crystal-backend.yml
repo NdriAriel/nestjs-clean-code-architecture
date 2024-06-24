@@ -2,14 +2,12 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy Node.js app to Azure Web App - crystal-backend
-
 on:
   push:
     branches:
     - main
     - master
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,11 +22,6 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
         registry: ${{secrets.REGISTRY}}
-
-        # - name: Build docker_compose
-        #   run: docker-compose up -d --build
-        # - name: Build application
-        #   run: docker-compose exec -T service yarn build
     - name: Build and push Docker image
       run: |
         docker buildx build --platform linux/amd64 -t crystalbackend.azurecr.io/nestjs-clean-code-architecture:v1 --push .
@@ -40,17 +33,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-
+      id-token: write
     steps:
-    # - name: Download artifact from build job
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: node-app
-
-    # - name: Unzip artifact for deployment
-    #   run: unzip release.zip
-
     - name: Login to Azure
       uses: azure/login@v1
       with:
@@ -62,11 +46,4 @@ jobs:
         az webapp config container set --resource-group ingestion --name crystal-backend --docker-custom-image-name crystalbackend.azurecr.io/nestjs-clean-code-architecture:v1
         az webapp restart --resource-group ingestion --name crystal-backend
 
-    # - name: 'Deploy to Azure Web App'
-    #   id: deploy-to-webapp
-    #   uses: azure/webapps-deploy@v2
-    #   with:
-    #     app-name: 'crystal-backend'
-    #     slot-name: 'Production'
-    #     package: .
 
