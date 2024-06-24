@@ -25,7 +25,6 @@ jobs:
     - name: Build and push Docker image
       run: |
         docker buildx build --platform linux/amd64 -t crystalbackend.azurecr.io/nestjs-clean-code-architecture:v1 --push .
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
