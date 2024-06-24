@@ -59,7 +59,7 @@ jobs:
         subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_199D40728CE44D2F90DA2B85612199CB }}
     - name: Deploy to Azure Web App
       run: |
-        az webapp config container set --resource-group ingestion --name crystal-backend --docker-custom-image-name crystalbackend.azurecr.io/nestjs-clean-code-architecture:latest
+        az webapp config container set --resource-group ingestion --name crystal-backend --docker-custom-image-name crystalbackend.azurecr.io/nestjs-clean-code-architecture:v1
         az webapp restart --resource-group ingestion --name crystal-backend
 
     # - name: 'Deploy to Azure Web App'
